@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/row_padding_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/row_padding_vertical">
+
+    <ImageView
+        android:id="@+id/TIAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/imagetest" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Hai"/>
+
+</LinearLayout>
