@@ -2,12 +2,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <fragment
-            android:name="com.example.jorit.images_app.fragments.TimelineFragment"
-            android:id="@+id/timelineFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp" />
+
+    <fragment
+        android:name="com.example.jorit.images_app.fragments.TimelineFragment"
+        android:id="@+id/timelineFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     </FrameLayout>
