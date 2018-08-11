@@ -21,6 +21,7 @@ import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.adapters.SpinnerAdapter;
 import com.example.jorit.images_app.adapters.TagsAdapter;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.helpers.tagTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class SettingsFragment extends Fragment {
     RecyclerView tagsRecyclerView;
 
     private TagsAdapter tagsAdapter;
+
+    private ItemTouchHelper tagsTouchHelper;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -88,7 +91,9 @@ public class SettingsFragment extends Fragment {
 
         tagsRecyclerView.setAdapter(tagsAdapter);
 
-
+        ItemTouchHelper.Callback callback = new tagTouchHelperCallback(tagsAdapter);
+        tagsTouchHelper = new ItemTouchHelper(callback);
+        tagsTouchHelper.attachToRecyclerView(tagsRecyclerView);
 
 
         tagsAdapter.notifyDataSetChanged();

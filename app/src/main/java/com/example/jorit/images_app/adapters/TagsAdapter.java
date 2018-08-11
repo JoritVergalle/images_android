@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.interfaces.ItemTouchHelperAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder>{
+public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder> implements ItemTouchHelperAdapter{
 
     private List<Tag> tagsList;
 
@@ -53,11 +54,22 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder
         return tagsList.size();
     }
 
-    public void removeItem(int position) {
+    @Override
+    public void onViewMoved(int oldPosition, int newPosition) {
+
+        Tag targetTag = tagsList.get(oldPosition);
+
+        Tag tag = new Tag(targetTag.getName(), targetTag.isPreferred());
+        tagsList.remove(oldPosition);
+        tagsList.add(newPosition, tag);
+        notifyItemMoved(oldPosition, newPosition);
+
+    }
+
+    @Override
+    public void onViewSwiped(int position) {
+
         tagsList.remove(position);
-        // notify the item removed by position
-        // to perform recycler view delete animations
-        // NOTE: don't call notifyDataSetChanged()
         notifyItemRemoved(position);
     }
 }
