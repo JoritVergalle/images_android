@@ -4,6 +4,10 @@ package com.example.jorit.images_app.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +19,9 @@ import android.widget.Spinner;
 
 import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.adapters.SpinnerAdapter;
+import com.example.jorit.images_app.adapters.TagsAdapter;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.helpers.tagTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +45,13 @@ public class SettingsFragment extends Fragment {
 
     @BindView(R.id.editTextNewTag)
     EditText editTextNewTag;
+
+    @BindView(R.id.tags_recycler_view)
+    RecyclerView tagsRecyclerView;
+
+    private TagsAdapter tagsAdapter;
+
+    private ItemTouchHelper tagsTouchHelper;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -69,6 +82,21 @@ public class SettingsFragment extends Fragment {
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(), 0,
                 tagList);
         spinner.setAdapter(spinnerAdapter);
+
+        tagsAdapter = new TagsAdapter(tagList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        tagsRecyclerView.setLayoutManager(mLayoutManager);
+        //timelineRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        tagsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        tagsRecyclerView.setAdapter(tagsAdapter);
+
+        ItemTouchHelper.Callback callback = new tagTouchHelperCallback(tagsAdapter);
+        tagsTouchHelper = new ItemTouchHelper(callback);
+        tagsTouchHelper.attachToRecyclerView(tagsRecyclerView);
+
+
+        tagsAdapter.notifyDataSetChanged();
 
         return v;
     }

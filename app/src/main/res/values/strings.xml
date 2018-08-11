@@ -8,4 +8,5 @@
     <string name="zichtbareTags">Zichtbare tags: </string>
     <string name="add">Add</string>
     <string name="hintNieuweTag">Nieuwe tag</string>
+    <string name="tag">Tag</string>
 </resources>
