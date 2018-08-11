@@ -16,5 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!--<fragment-->
+    <!--android:name="com.example.jorit.images_app.fragments.SettingsFragment"-->
+    <!--android:id="@+id/settingsFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
 
     </FrameLayout>
