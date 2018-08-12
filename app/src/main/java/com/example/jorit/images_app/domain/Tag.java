@@ -1,16 +1,33 @@
 package com.example.jorit.images_app.domain;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
 public class Tag {
+
+    @Id
+    private long id;
+
     private String name;
     private boolean preferred;
 
-    public Tag(String name, boolean preferred) {
+    public Tag(long id, String name, boolean preferred) {
+        this.id = id;
         this.name = name;
         this.preferred = preferred;
     }
 
     public Tag() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
