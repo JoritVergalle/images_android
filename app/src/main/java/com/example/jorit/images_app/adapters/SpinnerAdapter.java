@@ -1,5 +1,6 @@
 package com.example.jorit.images_app.adapters;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +11,24 @@ import android.widget.TextView;
 
 import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.fragments.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpinnerAdapter extends ArrayAdapter<Tag> {
     private Context mContext;
-    private ArrayList<Tag> listState;
+    private List<Tag> listState;
     private SpinnerAdapter spinnerAdapter;
+    private SettingsFragment fragment;
     private boolean isFromView = false;
 
-    public SpinnerAdapter(Context context, int resource, List<Tag> objects) {
+    public SpinnerAdapter(Context context, int resource, List<Tag> objects, SettingsFragment  fragment) {
         super(context, resource, objects);
         this.mContext = context;
-        this.listState = (ArrayList<Tag>) objects;
+        this.listState = objects;
         this.spinnerAdapter = this;
+        this.fragment = fragment;
     }
 
     @Override
@@ -76,6 +80,7 @@ public class SpinnerAdapter extends ArrayAdapter<Tag> {
 
                 if (!isFromView) {
                     listState.get(position).setPreferred(isChecked);
+                    fragment.updateTag(listState.get(position));
                 }
             }
         });
@@ -85,5 +90,10 @@ public class SpinnerAdapter extends ArrayAdapter<Tag> {
     private class ViewHolder {
         private TextView mTextView;
         private CheckBox mCheckBox;
+    }
+
+    public void setTags(List<Tag> tags) {
+        listState = tags;
+        notifyDataSetChanged();
     }
 }

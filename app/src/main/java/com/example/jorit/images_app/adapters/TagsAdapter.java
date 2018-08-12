@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.fragments.SettingsFragment;
 import com.example.jorit.images_app.interfaces.ItemTouchHelperAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,6 +22,7 @@ import butterknife.ButterKnife;
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder> implements ItemTouchHelperAdapter{
 
     private List<Tag> tagsList;
+    private SettingsFragment fragment;
 
     public class TagsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textTagName)
@@ -31,10 +34,20 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder
         }
     }
 
-    public TagsAdapter(List<Tag> tagsList) {
-        this.tagsList = tagsList;
+    public TagsAdapter() {
+        this.tagsList = new ArrayList<>();
     }
 
+    public TagsAdapter(SettingsFragment fragment) {
+        this.fragment = fragment;
+    }
+
+    public void setTags(List<Tag> tags) {
+        tagsList = tags;
+        notifyDataSetChanged();
+    }
+
+    @NonNull
     @Override
     public TagsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -44,7 +57,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder
 
     @Override
     public void onBindViewHolder(TagsViewHolder holder, int position) {
-        Log.d("onBindViewHolder", "yes i guess");
         Tag tag = tagsList.get(position);
         holder.textTagName.setText(tag.getName());
     }
@@ -59,7 +71,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder
 
         Tag targetTag = tagsList.get(oldPosition);
 
-        Tag tag = new Tag(targetTag.getName(), targetTag.isPreferred());
+        Tag tag = new Tag(targetTag.getId(), targetTag.getName(), targetTag.isPreferred());
         tagsList.remove(oldPosition);
         tagsList.add(newPosition, tag);
         notifyItemMoved(oldPosition, newPosition);
@@ -68,7 +80,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagsViewHolder
 
     @Override
     public void onViewSwiped(int position) {
-
+        fragment.deleteTag(tagsList.get(position));
         tagsList.remove(position);
         notifyItemRemoved(position);
     }
