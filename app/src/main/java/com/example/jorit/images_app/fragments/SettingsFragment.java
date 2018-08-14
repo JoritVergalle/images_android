@@ -142,7 +142,7 @@ public class SettingsFragment extends Fragment {
 
     public void deleteTag(Tag tag){
         tagsBox.remove(tag);
-        updateTags();
+        //updateTags();
     }
 
     public void updateTag(Tag tag){

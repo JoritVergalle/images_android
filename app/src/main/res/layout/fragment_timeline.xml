@@ -16,7 +16,7 @@
 
 <!--The recommended margin for the bottom is 16dp for phones and 24dp for tablets.-->
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNewImage"
+        android:id="@+id/fabAddImageFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
