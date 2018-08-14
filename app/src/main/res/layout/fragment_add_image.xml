@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:windowBackground"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".fragments.AddImageFragment"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <!-- TODO: Update blank fragment layout -->
+        <ImageView
+            android:id="@+id/addImagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:contentDescription="@string/previewAfbeelding"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:src="@drawable/imagetest"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_photo_camera_24"
+            app:layout_anchor="@id/addImagePreview"
+            app:layout_anchorGravity="bottom|center" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <EditText
+        android:id="@+id/editTextNewTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintDescription"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tagDubbeldepunt"
+            android:textSize="20sp"/>
+
+        <Spinner
+            android:id="@+id/spinnerTagNewImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tooltipText="Test"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_gravity="center"
+        android:text="@string/voegToe"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

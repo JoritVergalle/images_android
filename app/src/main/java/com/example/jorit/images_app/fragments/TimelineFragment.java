@@ -2,7 +2,9 @@ package com.example.jorit.images_app.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +31,9 @@ public class TimelineFragment extends Fragment {
 
     @BindView(R.id.timeline_recycler_view)
     RecyclerView timelineRecyclerView;
+
+    @BindView(R.id.fabAddImageFragment)
+    FloatingActionButton fabAddImageFragment;
 
     private TimelineAdapter timelineAdapter;
 
@@ -66,4 +72,20 @@ public class TimelineFragment extends Fragment {
         return v;
     }
 
+    @OnClick(R.id.fabAddImageFragment)
+    public void ClickfabAddImageFragment() {
+        Fragment fragment = null;
+
+            fragment = new AddImageFragment();
+            //getActivity().getSupportActionBar.setTitle("Settings");
+
+
+        // Replacing the fragment.
+        if (fragment != null) {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.timelineFragment, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+    }
 }

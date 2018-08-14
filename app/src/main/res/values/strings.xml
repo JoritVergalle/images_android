@@ -9,4 +9,8 @@
     <string name="add">Add</string>
     <string name="hintNieuweTag">Nieuwe tag</string>
     <string name="tag">Tag</string>
+    <string name="previewAfbeelding">Preview van het beeld dat men zal gebruiken.</string>
+    <string name="hintDescription">Leg wat meer uit over het gekozen beeld.</string>
+    <string name="tagDubbeldepunt">Tag: </string>
+    <string name="voegToe">Voeg toe</string>
 </resources>
