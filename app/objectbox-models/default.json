@@ -22,9 +22,37 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:317984349257342082",
+      "lastPropertyId": "5:5318892333018885061",
+      "name": "Image",
+      "properties": [
+        {
+          "id": "1:3833312934056271476",
+          "name": "id"
+        },
+        {
+          "id": "2:9015290526698164540",
+          "name": "description"
+        },
+        {
+          "id": "3:1199849917503799350",
+          "name": "tag"
+        },
+        {
+          "id": "4:1682726387670904060",
+          "name": "type"
+        },
+        {
+          "id": "5:5318892333018885061",
+          "name": "location"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:632824481447782626",
+  "lastEntityId": "2:317984349257342082",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

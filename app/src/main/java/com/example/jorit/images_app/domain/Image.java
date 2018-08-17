@@ -1,25 +1,34 @@
 package com.example.jorit.images_app.domain;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
 public class Image {
-    private String id;
+    @Id
+    private long id;
     private String description;
     private String tag;
+    private String type;
+    private String location;
 
-    public Image(String id, String description, String tag) {
+    public Image(long id, String description, String tag, String type, String location) {
         this.id = id;
         this.description = description;
         this.tag = tag;
+        this.type = type;
+        this.location = location;
     }
 
     public Image() {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -37,5 +46,21 @@ public class Image {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

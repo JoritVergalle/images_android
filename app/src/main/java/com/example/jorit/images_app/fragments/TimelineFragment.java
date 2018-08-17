@@ -58,7 +58,7 @@ public class TimelineFragment extends Fragment {
 
         timelineRecyclerView.setAdapter(timelineAdapter);
 
-        Image image = new Image("1", "Toen we s'middags naar het stal gingen waren we zeer verbaast. We zagen dat één van kalfjes uitgebroken was uit de weide en tot bij onze ruin geraakte. Gelukkig namen we deze foto snel want de pret was de volgende minuut voorbij ;)", "Lifestyle");
+        Image image = new Image(1242421, "Toen we s'middags naar het stal gingen waren we zeer verbaast. We zagen dat één van kalfjes uitgebroken was uit de weide en tot bij onze ruin geraakte. Gelukkig namen we deze foto snel want de pret was de volgende minuut voorbij ;)", "Lifestyle", "ha", "ha");
         imagesList.add(image);
         imagesList.add(image);
         imagesList.add(image);
