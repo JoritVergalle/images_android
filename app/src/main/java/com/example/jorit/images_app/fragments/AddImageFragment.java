@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,6 +98,9 @@ public class AddImageFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_add_image, container, false);
         ButterKnife.bind(this, v);
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("Add new image");
 
         BoxStore boxStore = ((App) getActivity().getApplication()).getBoxStore();
         imageBox = boxStore.boxFor(Image.class);
@@ -183,12 +187,7 @@ public class AddImageFragment extends Fragment {
         Image image = new Image(0, description.getText().toString(), spinner.getSelectedItem().toString(), fotoType, mCurrentPhotoPath);
         Log.d("image", image.toString());
         imageBox.put(image);
-
-//            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-//            ft.replace(R.id.timelineFragment, fragment);
-//            ft.addToBackStack(null);
-//            ft.commit();
-
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 
     @OnClick(R.id.buttonSearchFlickr)

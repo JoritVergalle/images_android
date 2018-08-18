@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -91,9 +93,11 @@ public class SettingsFragment extends Fragment {
 
 
         List<Tag> tagsList = tagsQuery.find();
+        List<Tag> spinnerList = tagsQuery.find();
+        spinnerList.add(0, new Tag("Select preferred tags"));
 
         spinnerAdapter = new SpinnerAdapter(getActivity(), 0,
-                tagsList, SettingsFragment.this);
+                spinnerList, SettingsFragment.this);
         spinner.setAdapter(spinnerAdapter);
 
         tagsAdapter = new TagsAdapter(SettingsFragment.this);
@@ -115,8 +119,10 @@ public class SettingsFragment extends Fragment {
     private void updateTags() {
         List<Tag> tags = tagsQuery.find();
         tagsAdapter.setTags(tags);
+        List<Tag> spinnerList = tagsQuery.find();
+        spinnerList.add(0, new Tag("Select preferred tags"));
         spinnerAdapter = new SpinnerAdapter(getActivity(), 0,
-                tags, SettingsFragment.this);
+                spinnerList, SettingsFragment.this);
         spinner.setAdapter(spinnerAdapter);
     }
 
@@ -142,11 +148,22 @@ public class SettingsFragment extends Fragment {
 
     public void deleteTag(Tag tag){
         tagsBox.remove(tag);
+        List<Tag> spinnerList = tagsQuery.find();
+        spinnerList.add(0, new Tag("Select preferred tags"));
+        spinnerAdapter = new SpinnerAdapter(getActivity(), 0,
+                spinnerList, SettingsFragment.this);
+        spinner.setAdapter(spinnerAdapter);
         //updateTags();
     }
 
     public void updateTag(Tag tag){
         tagsBox.put(tag);
+    }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.empty, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

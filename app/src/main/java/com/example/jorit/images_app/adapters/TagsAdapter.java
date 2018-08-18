@@ -1,6 +1,7 @@
 package com.example.jorit.images_app.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -7,11 +7,11 @@
     <string name="timeline">Timeline</string>
     <string name="zichtbareTags">Zichtbare tags: </string>
     <string name="add">Add</string>
-    <string name="hintNieuweTag">Nieuwe tag</string>
+    <string name="hintNieuweTag">New tag</string>
     <string name="tag">Tag</string>
     <string name="previewAfbeelding">Preview van het beeld dat men zal gebruiken.</string>
-    <string name="hintDescription">Leg wat meer uit over het gekozen beeld.</string>
+    <string name="hintDescription">Description about the image.</string>
     <string name="tagDubbeldepunt">Tag: </string>
-    <string name="voegToe">Voeg toe</string>
-    <string name="zoekFlickr">Zoek op Flickr</string>
+    <string name="voegToe">Add</string>
+    <string name="zoekFlickr">Search on Flickr</string>
 </resources>
