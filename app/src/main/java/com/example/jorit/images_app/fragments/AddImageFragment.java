@@ -2,6 +2,7 @@ package com.example.jorit.images_app.fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,7 @@ import com.example.jorit.images_app.domain.Image;
 import com.example.jorit.images_app.domain.Tag;
 import com.example.jorit.images_app.network.GetDataService;
 import com.example.jorit.images_app.network.RetrofitClientInstance;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +69,7 @@ public class AddImageFragment extends Fragment {
     private FlickrAdapter flickrAdapter;
 
     String mCurrentPhotoPath;
+    String fotoType;
 
     @BindView(R.id.spinnerTagNewImage)
     Spinner spinner;
@@ -115,7 +118,7 @@ public class AddImageFragment extends Fragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
-        flickrAdapter = new FlickrAdapter(photoList);
+        flickrAdapter = new FlickrAdapter(photoList, AddImageFragment.this);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         flickr_recycler_view.setLayoutManager(mLayoutManager);
         flickr_recycler_view.setAdapter(flickrAdapter);
@@ -147,6 +150,7 @@ public class AddImageFragment extends Fragment {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+        fotoType = "CAMERA";
         return image;
     }
 
@@ -176,7 +180,7 @@ public class AddImageFragment extends Fragment {
 
     @OnClick(R.id.buttonAddImage)
     public void addImage() {
-        Image image = new Image(0, description.getText().toString(), spinner.getSelectedItem().toString(), "CAMERA", mCurrentPhotoPath);
+        Image image = new Image(0, description.getText().toString(), spinner.getSelectedItem().toString(), fotoType, mCurrentPhotoPath);
         Log.d("image", image.toString());
         imageBox.put(image);
 
@@ -237,5 +241,13 @@ public class AddImageFragment extends Fragment {
             Log.d("picturePath", mCurrentPhotoPath);
             addImagePreview.setImageBitmap(imageBitmap);
         }
+    }
+
+    public void setPreviewFlickr(String previewFlickr) {
+        Context context = addImagePreview.getContext();
+        Picasso.with(context).load(previewFlickr).into(addImagePreview);
+        fotoType = "FLICKR";
+        mCurrentPhotoPath = previewFlickr;
+
     }
 }
