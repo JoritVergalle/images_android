@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +24,6 @@ import com.example.jorit.images_app.domain.Image;
 import com.example.jorit.images_app.domain.Tag;
 import com.example.jorit.images_app.helpers.timelineTouchHelperCallback;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,10 @@ public class TimelineFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timeline, container, false);
         ButterKnife.bind(this, v);
+        setHasOptionsMenu(true);
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("Timeline");
 
         BoxStore boxStore = ((App) getActivity().getApplication()).getBoxStore();
         imagesBox = boxStore.boxFor(Image.class);
@@ -121,22 +128,20 @@ public class TimelineFragment extends Fragment {
 
     @OnClick(R.id.fabAddImageFragment)
     public void ClickfabAddImageFragment() {
-        Fragment fragment = null;
-
-            fragment = new AddImageFragment();
-            //getActivity().getSupportActionBar.setTitle("Settings");
-
-
-        // Replacing the fragment.
-        if (fragment != null) {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.timelineFragment, fragment);
-            ft.addToBackStack(null);
-            ft.commit();
-        }
+        Fragment fragment = new AddImageFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void deleteImage(Image image){
         imagesBox.remove(image);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }
