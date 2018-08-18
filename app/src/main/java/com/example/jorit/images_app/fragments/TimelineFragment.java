@@ -72,19 +72,19 @@ public class TimelineFragment extends Fragment {
         List<Tag> tagsList = tagsQuery.find();
         if(tagsList.isEmpty()){
             Tag tag = new Tag();
-            tag.setName("Relaties");
+            tag.setName("Relationships");
             tag.setPreferred(true);
             tagsBox.put(tag);
             tag = new Tag();
-            tag.setName("Wonen");
+            tag.setName("Living");
             tag.setPreferred(true);
             tagsBox.put(tag);
             tag = new Tag();
-            tag.setName("Vrije tijd & dagbesteding");
+            tag.setName("Spare time");
             tag.setPreferred(true);
             tagsBox.put(tag);
             tag = new Tag();
-            tag.setName("Gezondheid & Welzijn");
+            tag.setName("Health");
             tag.setPreferred(true);
             tagsBox.put(tag);
         }
