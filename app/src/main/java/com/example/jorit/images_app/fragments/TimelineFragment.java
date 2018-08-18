@@ -96,11 +96,21 @@ public class TimelineFragment extends Fragment {
             tagsBox.put(tag);
         }
 
-
         List<Image> imagesList = imagesQuery.find();
+        List<Image> imagesFiltered = new ArrayList<>();
+        tagsList = tagsQuery.find();
+        for(Tag tag : tagsList){
+            if(tag.isPreferred()){
+                for(Image image : imagesList){
+                    if(image.getTag().equals(tag.getName())) {
+                        imagesFiltered.add(image);
+                    }
+                }
+            }
+        }
 
         //timelineAdapter = new TimelineAdapter(imagesList);
-        timelineAdapter = new TimelineAdapter(TimelineFragment.this, imagesList);
+        timelineAdapter = new TimelineAdapter(TimelineFragment.this, imagesFiltered);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         timelineRecyclerView.setLayoutManager(mLayoutManager);
         //timelineRecyclerView.setItemAnimator(new DefaultItemAnimator());
