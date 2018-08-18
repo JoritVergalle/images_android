@@ -66,6 +66,29 @@ public class TimelineFragment extends Fragment {
         imagesBox = boxStore.boxFor(Image.class);
         imagesQuery = imagesBox.query().build();
 
+        Box<Tag> tagsBox = boxStore.boxFor(Tag.class);
+        Query<Tag> tagsQuery = tagsBox.query().build();
+
+        List<Tag> tagsList = tagsQuery.find();
+        if(tagsList.isEmpty()){
+            Tag tag = new Tag();
+            tag.setName("Relaties");
+            tag.setPreferred(true);
+            tagsBox.put(tag);
+            tag = new Tag();
+            tag.setName("Wonen");
+            tag.setPreferred(true);
+            tagsBox.put(tag);
+            tag = new Tag();
+            tag.setName("Vrije tijd & dagbesteding");
+            tag.setPreferred(true);
+            tagsBox.put(tag);
+            tag = new Tag();
+            tag.setName("Gezondheid & Welzijn");
+            tag.setPreferred(true);
+            tagsBox.put(tag);
+        }
+
 
         List<Image> imagesList = imagesQuery.find();
 
