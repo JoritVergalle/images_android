@@ -1,5 +1,6 @@
 package com.example.jorit.images_app.adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.domain.Image;
 import com.example.jorit.images_app.fragments.TimelineFragment;
 import com.example.jorit.images_app.interfaces.ItemTouchHelperAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -66,9 +68,13 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         Image image = imagesList.get(position);
         holder.description.setText(image.getDescription());
         //need to add image yeeeee
-        Bitmap imageBitmap = BitmapFactory.decodeFile(image.getLocation());
-        holder.picture.setImageBitmap(imageBitmap);
-
+        if(image.getType().equals("CAMERA")){
+            Bitmap imageBitmap = BitmapFactory.decodeFile(image.getLocation());
+            holder.picture.setImageBitmap(imageBitmap);
+        } else {
+            Context context = holder.picture.getContext();
+            Picasso.with(context).load(image.getLocation()).into(holder.picture);
+        }
     }
 
     @Override
