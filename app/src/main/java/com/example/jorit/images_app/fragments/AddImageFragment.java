@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +26,13 @@ import android.widget.Spinner;
 
 import com.example.jorit.images_app.App;
 import com.example.jorit.images_app.R;
+import com.example.jorit.images_app.adapters.FlickrAdapter;
+import com.example.jorit.images_app.domain.Flickr.BaseResponse;
+import com.example.jorit.images_app.domain.Flickr.Photo;
 import com.example.jorit.images_app.domain.Image;
 import com.example.jorit.images_app.domain.Tag;
+import com.example.jorit.images_app.network.GetDataService;
+import com.example.jorit.images_app.network.RetrofitClientInstance;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +47,9 @@ import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.query.Query;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,6 +62,9 @@ public class AddImageFragment extends Fragment {
 
     private Box<Image> imageBox;
     private Query<Image> imageQuery;
+
+    private List<Photo> photoList = new ArrayList<>();
+    private FlickrAdapter flickrAdapter;
 
     String mCurrentPhotoPath;
 
@@ -66,6 +79,9 @@ public class AddImageFragment extends Fragment {
 
     @BindView(R.id.buttonAddImage)
     Button buttonAddImage;
+
+    @BindView(R.id.flickr_recycler_view)
+    RecyclerView flickr_recycler_view;
 
     public AddImageFragment() {
         // Required empty public constructor
@@ -98,6 +114,22 @@ public class AddImageFragment extends Fragment {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tags);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+        flickrAdapter = new FlickrAdapter(photoList);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        flickr_recycler_view.setLayoutManager(mLayoutManager);
+        flickr_recycler_view.setAdapter(flickrAdapter);
+
+        Photo photo = new Photo("monka");
+        photoList.add(photo);
+        photoList.add(photo);
+        photoList.add(photo);
+        photoList.add(photo);
+        photoList.add(photo);
+        photoList.add(photo);
+        Log.d("Another monkaS", photoList.toString());
+
+        flickrAdapter.notifyDataSetChanged();
 
         return v;
     }
@@ -152,6 +184,43 @@ public class AddImageFragment extends Fragment {
 //            ft.replace(R.id.timelineFragment, fragment);
 //            ft.addToBackStack(null);
 //            ft.commit();
+
+    }
+
+    @OnClick(R.id.buttonSearchFlickr)
+    public void searchFlickr() {
+
+        GetDataService caller = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+
+        Call<BaseResponse> call = caller.getFlickrImages("flickr.photos.search","a1f79d9845c842d2151c1a14a3f5fb01", spinner.getSelectedItem().toString(), "json", "1");
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                Log.d("heee","BackendCall search (tag) to flickr, response: " + response.body());
+                if (response.isSuccessful()) {
+                    Log.d("heee", "response body from call: " + response.body().toString());
+                    BaseResponse jsonRepsonse = response.body();
+                    Log.d("Line 164:", response.body().getStat());
+
+                    List<Photo> photoList = new ArrayList<>();
+                    for(Photo photo : jsonRepsonse.getPhotos().getPhoto()){
+                        photoList.add(photo);
+                    }
+                    //dit zorgt ervoor dat als we terug keren van het photoDetailFragment de lijst nog altijd bestaat
+                    //((MainActivity) getActivity()).setImagesInGallery(fotoList);
+                    flickrAdapter.setFlickrPhotos(photoList);
+
+                    // flickrAdapter.addAll(fotoList);
+                    flickrAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("Tag", "search tag backendCall failed, call " + call.request().toString() + "t =" + t.getMessage().toString());
+            }
+        });
 
     }
 

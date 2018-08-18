@@ -62,14 +62,39 @@
             android:tooltipText="Test"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonAddImage"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/buttonAddImage"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_gravity="left"
+            android:text="@string/voegToe"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/buttonSearchFlickr"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_gravity="right"
+            android:text="@string/zoekFlickr"
+            android:textColor="#FFFFFF" />
+
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/flickr_recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:layout_gravity="center"
-        android:text="@string/voegToe"
-        android:textColor="#FFFFFF" />
+        android:scrollbars="vertical"
+        android:padding="16dp"/>
 
 </LinearLayout>
