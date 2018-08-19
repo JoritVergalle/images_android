@@ -205,11 +205,9 @@ public class AddImageFragment extends Fragment {
                     Log.d("Line 164:", response.body().getStat());
 
                     List<Photo> photoList = new ArrayList<>(jsonRepsonse.getPhotos().getPhoto());
-                    //dit zorgt ervoor dat als we terug keren van het photoDetailFragment de lijst nog altijd bestaat
-                    //((MainActivity) getActivity()).setImagesInGallery(fotoList);
+
                     flickrAdapter.setFlickrPhotos(photoList);
 
-                    // flickrAdapter.addAll(fotoList);
                     flickrAdapter.notifyDataSetChanged();
                     flickr_recycler_view.setAlpha(1);
                 }
@@ -229,34 +227,9 @@ public class AddImageFragment extends Fragment {
         //super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            //Bundle extras = data.getExtras();
-            //Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-//            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-//            Log.d("picturePath", mCurrentPhotoPath);
-//            addImagePreview.setImageBitmap(imageBitmap);
-
-            int targetW = addImagePreview.getWidth();
-            int targetH = addImagePreview.getHeight();
-
-            // Get the dimensions of the bitmap
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-            // Decode the image file into a Bitmap sized to fill the View
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-            addImagePreview.setImageBitmap(bitmap);
-
+            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            Log.d("picturePath", mCurrentPhotoPath);
+            addImagePreview.setImageBitmap(imageBitmap);
         }
     }
 
