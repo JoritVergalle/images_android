@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.jorit.images_app.App;
 import com.example.jorit.images_app.R;
@@ -69,8 +70,8 @@ public class AddImageFragment extends Fragment {
     private List<Photo> photoList = new ArrayList<>();
     private FlickrAdapter flickrAdapter;
 
-    String mCurrentPhotoPath;
-    String fotoType;
+    String mCurrentPhotoPath = "";
+    String fotoType = "";
 
     @BindView(R.id.spinnerTagNewImage)
     Spinner spinner;
@@ -127,16 +128,9 @@ public class AddImageFragment extends Fragment {
         flickr_recycler_view.setLayoutManager(mLayoutManager);
         flickr_recycler_view.setAdapter(flickrAdapter);
 
-        Photo photo = new Photo("monka");
-        photoList.add(photo);
-        photoList.add(photo);
-        photoList.add(photo);
-        photoList.add(photo);
-        photoList.add(photo);
-        photoList.add(photo);
-        Log.d("Another monkaS", photoList.toString());
-
         flickrAdapter.notifyDataSetChanged();
+
+        flickr_recycler_view.setAlpha(0);
 
         return v;
     }
@@ -184,10 +178,14 @@ public class AddImageFragment extends Fragment {
 
     @OnClick(R.id.buttonAddImage)
     public void addImage() {
-        Image image = new Image(0, description.getText().toString(), spinner.getSelectedItem().toString(), fotoType, mCurrentPhotoPath);
-        Log.d("image", image.toString());
-        imageBox.put(image);
-        getActivity().getSupportFragmentManager().popBackStackImmediate();
+        if(!mCurrentPhotoPath.equals("") && !fotoType.equals("") && !description.getText().toString().equals("")) {
+            Image image = new Image(0, description.getText().toString(), spinner.getSelectedItem().toString(), fotoType, mCurrentPhotoPath);
+            imageBox.put(image);
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        } else {
+            Toast.makeText(getActivity(), "Please choose an image and fill in a description", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @OnClick(R.id.buttonSearchFlickr)
@@ -206,16 +204,14 @@ public class AddImageFragment extends Fragment {
                     BaseResponse jsonRepsonse = response.body();
                     Log.d("Line 164:", response.body().getStat());
 
-                    List<Photo> photoList = new ArrayList<>();
-                    for(Photo photo : jsonRepsonse.getPhotos().getPhoto()){
-                        photoList.add(photo);
-                    }
+                    List<Photo> photoList = new ArrayList<>(jsonRepsonse.getPhotos().getPhoto());
                     //dit zorgt ervoor dat als we terug keren van het photoDetailFragment de lijst nog altijd bestaat
                     //((MainActivity) getActivity()).setImagesInGallery(fotoList);
                     flickrAdapter.setFlickrPhotos(photoList);
 
                     // flickrAdapter.addAll(fotoList);
                     flickrAdapter.notifyDataSetChanged();
+                    flickr_recycler_view.setAlpha(1);
                 }
             }
 
@@ -236,9 +232,31 @@ public class AddImageFragment extends Fragment {
             //Bundle extras = data.getExtras();
             //Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-            Log.d("picturePath", mCurrentPhotoPath);
-            addImagePreview.setImageBitmap(imageBitmap);
+//            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+//            Log.d("picturePath", mCurrentPhotoPath);
+//            addImagePreview.setImageBitmap(imageBitmap);
+
+            int targetW = addImagePreview.getWidth();
+            int targetH = addImagePreview.getHeight();
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            addImagePreview.setImageBitmap(bitmap);
+
         }
     }
 
