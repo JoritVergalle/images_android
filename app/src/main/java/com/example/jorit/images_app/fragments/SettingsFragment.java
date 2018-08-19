@@ -160,10 +160,4 @@ public class SettingsFragment extends Fragment {
         tagsBox.put(tag);
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 }
