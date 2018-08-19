@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.jorit.images_app.R;
 import com.example.jorit.images_app.domain.Image;
 import com.example.jorit.images_app.fragments.TimelineFragment;
+import com.example.jorit.images_app.interfaces.ItemLongClickListener;
 import com.example.jorit.images_app.interfaces.ItemTouchHelperAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -28,16 +29,31 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
     private List<Image> imagesList;
     private TimelineFragment fragment;
 
-    public class TimelineViewHolder extends RecyclerView.ViewHolder {
+    public class TimelineViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         @BindView(R.id.description)
         public TextView description;
 
         @BindView(R.id.picture)
         public ImageView picture;
 
+        ItemLongClickListener itemLongClickListener;
+
         public TimelineViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnLongClickListener(this);
+        }
+
+        public void setItemLongClickListener(ItemLongClickListener itemLongClickListener)
+        {
+            this.itemLongClickListener=itemLongClickListener;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            this.itemLongClickListener.onItemLongClick(v,getLayoutPosition());
+            return false;
         }
     }
 
@@ -65,7 +81,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
 
     @Override
     public void onBindViewHolder(TimelineViewHolder holder, int position) {
-        Image image = imagesList.get(position);
+        final Image image = imagesList.get(position);
         holder.description.setText(image.getDescription());
         //need to add image yeeeee
         if(image.getType().equals("CAMERA")){
@@ -75,6 +91,13 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
             Context context = holder.picture.getContext();
             Picasso.with(context).load(image.getLocation()).into(holder.picture);
         }
+
+        holder.setItemLongClickListener(new ItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View v, int pos) {
+                fragment.openEditDialog(image);
+            }
+        });
     }
 
     @Override
