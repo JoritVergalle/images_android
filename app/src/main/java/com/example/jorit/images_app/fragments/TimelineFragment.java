@@ -3,9 +3,9 @@ package com.example.jorit.images_app.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -118,15 +118,6 @@ public class TimelineFragment extends Fragment {
 
         timelineRecyclerView.setAdapter(timelineAdapter);
 
-//        Image image = new Image(1242421, "Toen we s'middags naar het stal gingen waren we zeer verbaast. We zagen dat één van kalfjes uitgebroken was uit de weide en tot bij onze ruin geraakte. Gelukkig namen we deze foto snel want de pret was de volgende minuut voorbij ;)", "Lifestyle", "ha", "ha");
-//        imagesList.add(image);
-//        imagesList.add(image);
-//        imagesList.add(image);
-//        imagesList.add(image);
-//        imagesList.add(image);
-//        imagesList.add(image);
-//        imagesList.add(image);
-
         ItemTouchHelper.Callback callback = new timelineTouchHelperCallback(timelineAdapter);
         timelineTouchHelper = new ItemTouchHelper(callback);
         timelineTouchHelper.attachToRecyclerView(timelineRecyclerView);
@@ -148,6 +139,27 @@ public class TimelineFragment extends Fragment {
     public void deleteImage(Image image){
         imagesBox.remove(image);
     }
+
+
+    public void openEditDialog(Image image) {
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            transaction.remove(prev);
+        }
+        transaction.addToBackStack(null);
+        DialogFragment dialogFragment = new EditImageDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", image.getId());
+        bundle.putString("description", image.getDescription());
+        bundle.putString("tag", image.getTag());
+        bundle.putString("type", image.getType());
+        bundle.putString("location", image.getLocation());
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(transaction, "dialog");
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
