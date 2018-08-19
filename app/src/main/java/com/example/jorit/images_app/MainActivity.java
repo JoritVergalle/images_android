@@ -27,15 +27,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         toolbar.setTitle(R.string.timeline);
         setSupportActionBar(toolbar);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if(savedInstanceState==null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        TimelineFragment fragment = new TimelineFragment();
-        fragmentTransaction.add(R.id.content_frame, fragment);
-        fragmentTransaction.commit();
+            TimelineFragment fragment = new TimelineFragment();
+            fragmentTransaction.add(R.id.content_frame, fragment);
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override
@@ -56,4 +60,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -1,101 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:windowBackground"
     android:layout_marginTop="?attr/actionBarSize"
-    tools:context=".fragments.AddImageFragment"
-    android:orientation="vertical">
+    tools:context=".fragments.AddImageFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
-        <ImageView
-            android:id="@+id/addImagePreview"
+            <!-- TODO: Update blank fragment layout -->
+            <ImageView
+                android:id="@+id/addImagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/previewAfbeelding"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:src="@drawable/preview"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/FabTakePicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_photo_camera_24"
+                app:layout_anchor="@id/addImagePreview"
+                app:layout_anchorGravity="bottom|center" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <EditText
+            android:id="@+id/editTextNewTag"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:contentDescription="@string/previewAfbeelding"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:src="@drawable/preview"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/FabTakePicture"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_photo_camera_24"
-            app:layout_anchor="@id/addImagePreview"
-            app:layout_anchorGravity="bottom|center" />
+            android:hint="@string/hintDescription"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"/>
 
-
-    </android.support.design.widget.CoordinatorLayout>
-
-    <EditText
-        android:id="@+id/editTextNewTag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintDescription"
-        android:inputType="textMultiLine"
-        android:textAlignment="center"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tagDubbeldepunt"
-            android:textSize="20sp"/>
-
-        <Spinner
-            android:id="@+id/spinnerTagNewImage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:tooltipText="Defines the tag of the image"
-            tools:targetApi="o" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin">
-
-        <Button
-            android:id="@+id/buttonSearchFlickr"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:text="@string/zoekFlickr"
-            android:textColor="#FFFFFF" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-        <Button
-            android:id="@+id/buttonAddImage"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tagDubbeldepunt"
+                android:textSize="20sp"/>
+
+            <Spinner
+                android:id="@+id/spinnerTagNewImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:tooltipText="Defines the tag of the image"
+                tools:targetApi="o" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:text="@string/voegToe"
-            android:textColor="#FFFFFF" />
+            android:paddingHorizontal="@dimen/activity_horizontal_margin">
+
+            <Button
+                android:id="@+id/buttonSearchFlickr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="@string/zoekFlickr"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonAddImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="@string/voegToe"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/flickr_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:paddingLeft="16dp"/>
 
     </LinearLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/flickr_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:paddingLeft="16dp"/>
-
-</LinearLayout>
+</ScrollView>
