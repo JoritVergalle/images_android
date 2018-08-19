@@ -14,7 +14,7 @@
         android:id="@+id/picture"
         android:layout_width="match_parent"
         android:layout_height="264dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/PictureImage"
         android:src="@drawable/imagetest" />
 
     <TextView
@@ -24,6 +24,6 @@
         android:textColor="@color/title"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Hai"/>
+        android:gravity="center"/>
 
 </LinearLayout>

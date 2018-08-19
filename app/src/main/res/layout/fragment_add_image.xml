@@ -17,10 +17,10 @@
         <ImageView
             android:id="@+id/addImagePreview"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="150dp"
             android:contentDescription="@string/previewAfbeelding"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:src="@drawable/imagetest"/>
+            android:src="@drawable/preview"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/FabTakePicture"
@@ -59,33 +59,34 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:tooltipText="Test"/>
+            android:tooltipText="Defines the tag of the image"
+            tools:targetApi="o" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/buttonAddImage"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_gravity="left"
-            android:text="@string/voegToe"
-            android:textColor="#FFFFFF" />
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin">
 
         <Button
             android:id="@+id/buttonSearchFlickr"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_weight="1"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_gravity="right"
             android:text="@string/zoekFlickr"
             android:textColor="#FFFFFF" />
 
+        <Button
+            android:id="@+id/buttonAddImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="@string/voegToe"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -95,6 +96,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:padding="16dp"/>
+        android:paddingLeft="16dp"/>
 
 </LinearLayout>
