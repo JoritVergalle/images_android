@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.content_frame, fragment);
             fragmentTransaction.commit();
         }
-
     }
 
     @Override

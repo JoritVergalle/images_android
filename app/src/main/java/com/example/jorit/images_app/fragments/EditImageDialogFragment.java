@@ -1,6 +1,8 @@
 package com.example.jorit.images_app.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +45,31 @@ public class EditImageDialogFragment extends DialogFragment {
     EditText descriptionDialog;
 
     private Image image;
+//
+//    /* The activity that creates an instance of this dialog fragment must
+//     * implement this interface in order to receive event callbacks.
+//     * Each method passes the DialogFragment in case the host needs to query it. */
+    public interface EditImageDialogListener {
+        void onDialogPositiveClick(DialogFragment dialog);
+    }
+//
+//    // Use this instance of the interface to deliver action events
+//    EditImageDialogListener mListener;
+//
+//    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        // Verify that the host activity implements the callback interface
+//        try {
+//            // Instantiate the NoticeDialogListener so we can send events to the host
+//            mListener = (EditImageDialogListener) context;
+//        } catch (ClassCastException e) {
+//            // The activity doesn't implement the interface, throw exception
+//            throw new ClassCastException(context.toString()
+//                    + " must implement NoticeDialogListener");
+//        }
+//    }
 
     public EditImageDialogFragment() {
     }
@@ -68,9 +95,6 @@ public class EditImageDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
         descriptionDialog.setText(image.getDescription());
 
-
-
-
         BoxStore boxStore = ((App) getActivity().getApplication()).getBoxStore();
         imageBox = boxStore.boxFor(Image.class);
         imageQuery = imageBox.query().build();
@@ -88,15 +112,16 @@ public class EditImageDialogFragment extends DialogFragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDialog.setAdapter(dataAdapter);
 
-
         builder.setTitle("Edit image")
                 .setView(view)
                 .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         if(!image.getDescription().equals(descriptionDialog.getText().toString()) || !image.getTag().equals(spinnerDialog.getSelectedItem().toString())) {
                             image.setDescription(descriptionDialog.getText().toString());
                             image.setTag(spinnerDialog.getSelectedItem().toString());
                             imageBox.put(image);
+                            //mListener.onDialogPositiveClick(EditImageDialogFragment.this);
                         }
                     }
                 })
@@ -107,26 +132,5 @@ public class EditImageDialogFragment extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-
-        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        //LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        //builder.setView(inflater.inflate(R.layout.dialog_signin, null))
-//                // Add action buttons
-//                .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // sign in the user ...
-//                    }
-//                })
-//                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        LoginDialogFragment.this.getDialog().cancel();
-//                    }
-//                });
-//        return builder.create();
     }
 }
